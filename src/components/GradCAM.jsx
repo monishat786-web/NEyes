@@ -47,7 +47,7 @@ export default function GradCAM() {
 
         <Layers
           size={22}
-          color="#0284c7"
+          color="var(--primary-600)"
         />
 
         {t.gradcamTitle}
@@ -74,10 +74,10 @@ export default function GradCAM() {
             alignItems: 'center',
             gap: '1rem',
             marginBottom: '1rem',
-            background: '#f8fafc',
+            background: 'var(--primary-50)',
             padding: '0.6rem 1rem',
             borderRadius: '8px',
-            border: '1px solid #e2e8f0'
+            border: '1px solid var(--border-color)'
           }}
         >
 
@@ -85,7 +85,7 @@ export default function GradCAM() {
             style={{
               fontSize: '0.85rem',
               fontWeight: 600,
-              color: '#475569'
+              color: 'var(--text-muted)'
             }}
           >
             Heatmap Intensity:
@@ -106,7 +106,7 @@ export default function GradCAM() {
             style={{
               cursor: 'pointer',
               flex: 1,
-              accentColor: '#0284c7'
+              accentColor: 'var(--primary-600)'
             }}
           />
 
@@ -115,7 +115,8 @@ export default function GradCAM() {
             style={{
               fontSize: '0.85rem',
               fontWeight: 700,
-              minWidth: '40px'
+              minWidth: '40px',
+              color: 'var(--text-dark)'
             }}
           >
             {Math.round(
@@ -143,7 +144,7 @@ export default function GradCAM() {
             style={{
               fontWeight: 700,
               fontSize: '0.85rem',
-              color: '#334155',
+              color: 'var(--text-dark)',
               marginBottom: '0.4rem',
               display: 'flex',
               alignItems: 'center',
@@ -153,7 +154,7 @@ export default function GradCAM() {
 
             <Eye
               size={16}
-              color="#0284c7"
+              color="var(--primary-600)"
             />
 
             Original Fundus Scan
@@ -181,7 +182,7 @@ export default function GradCAM() {
             style={{
               fontWeight: 700,
               fontSize: '0.85rem',
-              color: '#334155',
+              color: 'var(--text-dark)',
               marginBottom: '0.4rem',
               display: 'flex',
               alignItems: 'center',
@@ -222,7 +223,7 @@ export default function GradCAM() {
                 style={{
                   padding: '2rem',
                   textAlign: 'center',
-                  color: '#64748b'
+                  color: 'var(--text-muted)'
                 }}
               >
                 Grad-CAM not available
@@ -248,8 +249,9 @@ export default function GradCAM() {
           gap: '0.5rem',
           marginTop: '1rem',
           fontSize: '0.8rem',
-          color: '#64748b',
-          background: '#f0f9ff',
+          color: 'var(--text-muted)',
+          background: 'var(--primary-50)',
+          border: '1px solid var(--primary-100)',
           padding: '0.6rem 0.8rem',
           borderRadius: '6px'
         }}
@@ -257,7 +259,7 @@ export default function GradCAM() {
 
         <Info
           size={16}
-          color="#0284c7"
+          color="var(--primary-600)"
         />
 
         <span>
@@ -282,7 +284,7 @@ export default function GradCAM() {
           style={{
             marginTop: '0.8rem',
             fontSize: '0.85rem',
-            color: '#334155'
+            color: 'var(--text-dark)'
           }}
         >
 

@@ -14,9 +14,9 @@ export default function QualityCheck() {
 
       {/* Loading state when verifying image quality */}
       {isQualityChecking && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem', background: '#f0f9ff', borderRadius: '8px', border: '1px solid #bae6fd' }}>
-          <Loader2 className="animate-spin" size={24} color="#0284c7" />
-          <span style={{ fontWeight: 600, color: '#0369a1' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '1rem', background: 'var(--primary-50)', borderRadius: '8px', border: '1px solid var(--primary-100)' }}>
+          <Loader2 className="animate-spin" size={24} color="var(--primary-600)" />
+          <span style={{ fontWeight: 600, color: 'var(--primary-700)' }}>
             {t.checkingQuality}
           </span>
         </div>

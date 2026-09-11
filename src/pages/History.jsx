@@ -31,10 +31,10 @@ export default function History() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       <div>
-        <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-          <HistoryIcon color="#0284c7" size={28} /> Patient Screening History Log
+        <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-dark)', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+          <HistoryIcon color="var(--primary-600)" size={28} /> Patient Screening History Log
         </h2>
-        <p style={{ fontSize: '0.9rem', color: '#64748b', marginTop: '0.2rem' }}>
+        <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
           Comprehensive record of past retina screenings, longitudinal progression trends, and physician validations.
         </p>
       </div>
@@ -43,24 +43,24 @@ export default function History() {
       <div className="card" style={{ marginBottom: 0, padding: '1rem 1.25rem' }}>
         <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
           {/* Search box */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#f8fafc', border: '1px solid #cbd5e1', padding: '0.4rem 0.8rem', borderRadius: '8px', flex: '1', minWidth: '220px' }}>
-            <Search size={18} color="#64748b" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'var(--primary-50)', border: '1px solid var(--border-color)', padding: '0.4rem 0.8rem', borderRadius: '8px', flex: '1', minWidth: '220px' }}>
+            <Search size={18} color="var(--text-muted)" />
             <input 
               type="text" 
               placeholder="Search by Patient Name, ID (e.g. DR-892401)..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              style={{ border: 'none', background: 'transparent', outline: 'none', width: '100%', fontSize: '0.9rem' }}
+              style={{ border: 'none', background: 'transparent', outline: 'none', width: '100%', fontSize: '0.9rem', color: 'var(--text-dark)' }}
             />
           </div>
 
           {/* Filter dropdown */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <Filter size={18} color="#64748b" />
+            <Filter size={18} color="var(--text-muted)" />
             <select
               value={gradeFilter}
               onChange={(e) => setGradeFilter(e.target.value)}
-              style={{ padding: '0.5rem 0.75rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '0.875rem', fontWeight: 600, background: 'white' }}
+              style={{ padding: '0.5rem 0.75rem', borderRadius: '8px', border: '1px solid var(--border-color)', fontSize: '0.875rem', fontWeight: 600, background: 'var(--card-bg)', color: 'var(--text-dark)' }}
             >
               <option value="All">All Grades</option>
               <option value="No DR">No DR</option>
@@ -92,18 +92,18 @@ export default function History() {
             <tbody>
               {filteredHistory.map((row) => (
                 <tr key={row.id}>
-                  <td style={{ fontWeight: 700, color: '#0284c7' }}>{row.id}</td>
+                  <td style={{ fontWeight: 700, color: 'var(--primary-600)' }}>{row.id}</td>
                   <td>
-                    <div style={{ fontWeight: 700, color: '#0f172a' }}>{row.patientName}</div>
-                    <div style={{ fontSize: '0.75rem', color: '#64748b' }}>{row.patientId} • {row.age}y/{row.gender}</div>
+                    <div style={{ fontWeight: 700, color: 'var(--text-dark)' }}>{row.patientName}</div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{row.patientId} • {row.age}y/{row.gender}</div>
                   </td>
-                  <td style={{ fontSize: '0.85rem', color: '#475569' }}>{row.date}</td>
+                  <td style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>{row.date}</td>
                   <td>
                     <span className={`severity-badge ${getSeverityBadgeClass(row.grade)}`}>
                       {row.grade}
                     </span>
                   </td>
-                  <td style={{ fontWeight: 600, fontSize: '0.85rem' }}>{row.confidence}</td>
+                  <td style={{ fontWeight: 600, fontSize: '0.85rem', color: 'var(--text-dark)' }}>{row.confidence}</td>
                   <td style={{ fontSize: '0.8rem', color: row.doctorStatus.includes('Pending') ? '#d97706' : '#059669', fontWeight: 600 }}>
                     {row.doctorStatus}
                   </td>
@@ -113,9 +113,9 @@ export default function History() {
                       borderRadius: '4px',
                       fontSize: '0.8rem',
                       fontWeight: 700,
-                      background: row.isHighRisk ? '#fef2f2' : '#f8fafc',
-                      color: row.isHighRisk ? '#dc2626' : '#334155',
-                      border: row.isHighRisk ? '1px solid #fecaca' : '1px solid #e2e8f0'
+                      background: row.isHighRisk ? '#fef2f2' : 'var(--primary-50)',
+                      color: row.isHighRisk ? '#dc2626' : 'var(--text-dark)',
+                      border: row.isHighRisk ? '1px solid #fecaca' : '1px solid var(--border-color)'
                     }}>
                       {row.trend}
                     </span>

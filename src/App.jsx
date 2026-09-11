@@ -67,8 +67,8 @@ export default function App() {
         {/* Controls: Language Selector & Network Sync Toggle */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           {/* Language Selector */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', background: '#f1f5f9', padding: '0.35rem 0.6rem', borderRadius: '8px' }}>
-            <Globe size={16} color="#475569" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', background: 'var(--primary-50)', padding: '0.35rem 0.6rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
+            <Globe size={16} color="var(--primary-600)" />
             <select
               value={language}
               onChange={(e) => setLanguage(e.target.value)}
@@ -77,7 +77,7 @@ export default function App() {
                 background: 'transparent',
                 fontSize: '0.85rem',
                 fontWeight: 700,
-                color: '#334155',
+                color: 'var(--text-dark)',
                 outline: 'none',
                 cursor: 'pointer'
               }}
@@ -129,12 +129,12 @@ export default function App() {
       <footer style={{
         textAlign: 'center',
         padding: '1.5rem 0',
-        borderTop: '1px solid #e2e8f0',
-        color: '#64748b',
+        borderTop: '1px solid var(--border-color)',
+        color: 'var(--text-light)',
         fontSize: '0.85rem'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
-          <Activity size={16} color="#0284c7" />
+          <Activity size={16} color="var(--primary-600)" />
           <strong>RetinaGuard AI Screening Platform</strong>
         </div>
         <p style={{ margin: 0 }}>Designed for preliminary diabetic retinopathy screening & clinical support.</p>

@@ -23,10 +23,10 @@ export default function DoctorReview() {
   };
 
   return (
-    <div className="card" style={{ border: '2px solid #0284c7', backgroundColor: '#fafafa' }}>
+    <div className="card" style={{ border: '2px solid var(--primary-600)', backgroundColor: 'var(--card-bg)' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1rem' }}>
         <h3 className="card-title" style={{ margin: 0 }}>
-          <UserCheck size={24} color="#0284c7" />
+          <UserCheck size={24} color="var(--primary-600)" />
           {t.doctorReviewTitle}
         </h3>
         {doctorReview?.saved && (
@@ -40,13 +40,13 @@ export default function DoctorReview() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1rem' }}>
           {/* Action Dropdown: Confirm vs Modify */}
           <div>
-            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: '#334155', marginBottom: '0.4rem' }}>
+            <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-dark)', marginBottom: '0.4rem' }}>
               Doctor Action:
             </label>
             <select
               value={action}
               onChange={(e) => setAction(e.target.value)}
-              style={{ width: '100%', padding: '0.6rem', borderRadius: '6px', border: '1px solid #cbd5e1', fontWeight: 600, background: 'white' }}
+              style={{ width: '100%', padding: '0.6rem', borderRadius: '6px', border: '1px solid var(--border-color)', fontWeight: 600, background: 'var(--card-bg)', color: 'var(--text-dark)' }}
             >
               <option value="Confirm">{t.actionConfirm}</option>
               <option value="Modify">{t.actionModify}</option>
@@ -76,15 +76,15 @@ export default function DoctorReview() {
 
         {/* Doctor Clinical Notes */}
         <div style={{ marginBottom: '1.25rem' }}>
-          <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', fontWeight: 700, color: '#334155', marginBottom: '0.4rem' }}>
-            <FileText size={16} color="#0284c7" /> Clinical Notes & Advice:
+          <label style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-dark)', marginBottom: '0.4rem' }}>
+            <FileText size={16} color="var(--primary-600)" /> Clinical Notes & Advice:
           </label>
           <textarea
             rows={3}
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder={t.notesPlaceholder}
-            style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid #cbd5e1', fontFamily: 'inherit', fontSize: '0.9rem', resize: 'vertical' }}
+            style={{ width: '100%', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border-color)', background: 'var(--card-bg)', color: 'var(--text-dark)', fontFamily: 'inherit', fontSize: '0.9rem', resize: 'vertical' }}
           />
         </div>
 

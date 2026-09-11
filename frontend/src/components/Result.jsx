@@ -53,13 +53,13 @@ export default function Result() {
       {/* Main Result Card */}
       <div className="card">
         <h3 className="card-title">
-          <Activity size={22} color="#0284c7" />
+          <Activity size={22} color="var(--primary-600)" />
           {t.drSeverity}
         </h3>
 
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', margin: '1.25rem 0', flexWrap: 'wrap', gap: '1rem' }}>
           <div>
-            <span style={{ fontSize: '0.85rem', color: '#64748b', fontWeight: 600, display: 'block', marginBottom: '0.3rem' }}>
+            <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, display: 'block', marginBottom: '0.3rem' }}>
               AI Predicted Diagnosis
             </span>
             <span className={`severity-badge ${getSeverityBadgeClass(grade)}`} style={{ fontSize: '1.1rem', padding: '0.5rem 1.25rem' }}>
@@ -68,10 +68,10 @@ export default function Result() {
           </div>
 
           <div style={{ textAlignment: 'right' }}>
-            <span style={{ fontSize: '0.85rem', color: '#64748b', fontWeight: 600, display: 'block', marginBottom: '0.3rem' }}>
+            <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, display: 'block', marginBottom: '0.3rem' }}>
               Model Score / Probability
             </span>
-            <span style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a' }}>
+            <span style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--text-dark)' }}>
               {(confidence * 100).toFixed(1)}%
             </span>
           </div>
@@ -91,21 +91,21 @@ export default function Result() {
         )}
 
         {/* Micro Clinical Breakdown Metrics */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.75rem', marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid #e2e8f0' }}>
-          <div style={{ background: '#f8fafc', padding: '0.75rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-            <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600 }}>Microaneurysms</span>
-            <p style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.75rem', marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border-color)' }}>
+          <div style={{ background: 'var(--primary-50)', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>Microaneurysms</span>
+            <p style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-dark)', margin: 0 }}>
               {grade === 'No DR' ? '0' : grade === 'Mild' ? '3 - 5' : '15+'}
             </p>
           </div>
-          <div style={{ background: '#f8fafc', padding: '0.75rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-            <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600 }}>Hard Exudates</span>
-            <p style={{ fontSize: '1.1rem', fontWeight: 700, color: '#0f172a', margin: 0 }}>
+          <div style={{ background: 'var(--primary-50)', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>Hard Exudates</span>
+            <p style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-dark)', margin: 0 }}>
               {grade === 'No DR' || grade === 'Mild' ? 'None' : 'Detected'}
             </p>
           </div>
-          <div style={{ background: '#f8fafc', padding: '0.75rem', borderRadius: '8px', border: '1px solid #e2e8f0' }}>
-            <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 600 }}>Macular Edema Risk</span>
+          <div style={{ background: 'var(--primary-50)', padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--border-color)' }}>
+            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', fontWeight: 600 }}>Macular Edema Risk</span>
             <p style={{ fontSize: '1.1rem', fontWeight: 700, color: isHighRisk ? '#dc2626' : '#059669', margin: 0 }}>
               {isHighRisk ? 'High' : grade === 'Moderate' ? 'Moderate' : 'Low'}
             </p>

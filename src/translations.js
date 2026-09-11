@@ -1,6 +1,6 @@
 export const translations = {
   en: {
-    appTitle: "RetinaGuard AI",
+    appTitle: "NEyes",
     appSubtitle: "Diabetic Retinopathy Early Detection & Screening",
     navHome: "Home",
     navScreening: "Screening",
@@ -48,7 +48,7 @@ export const translations = {
     gradcamDesc: "Side-by-side visualization showing regions of retinal lesions, microaneurysms, or exudates influencing the AI classification.",
   },
   ta: {
-    appTitle: "ரெடினாகார்டு AI",
+    appTitle: "NEyes",
     appSubtitle: "சர்க்கரை நோய் விழித்திரை பாதிப்பு பரிசோதனை",
     navHome: "முகப்பு",
     navScreening: "பரிசோதனை",
@@ -96,7 +96,7 @@ export const translations = {
     gradcamDesc: "AI கணிப்புக்கு காரணமான விழித்திரை பகுதிகளை பக்கவாட்டில் காட்டும் வரைபடம்.",
   },
   hi: {
-    appTitle: "रेटिनागार्ड AI",
+    appTitle: "NEyes",
     appSubtitle: "डायबेटिक रेटिनोपैथी प्रारंभिक जांच प्रणाली",
     navHome: "होम",
     navScreening: "स्क्रीनिंग",
@@ -144,7 +144,7 @@ export const translations = {
     gradcamDesc: "रेटिना के प्रभावित क्षेत्रों को दर्शाने वाला AI विज़ुअलाइज़ेशन।",
   },
   te: {
-    appTitle: "రెటినాగార్డ్ AI",
+    appTitle: "NEyes",
     appSubtitle: "డయాబెటిక్ రెటినోపతి స్క్రీనింగ్ వ్యవస్థ",
     navHome: "హోమ్",
     navScreening: "స్క్రీనింగ్",

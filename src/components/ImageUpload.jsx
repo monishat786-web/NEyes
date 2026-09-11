@@ -59,22 +59,22 @@ export default function ImageUpload() {
           onChange={handleFileChange} 
         />
         <div className="dropzone-icon">📷</div>
-        <p style={{ fontWeight: 700, fontSize: '1rem', color: '#0369a1', marginBottom: '0.25rem' }}>
+        <p style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--primary-700)', marginBottom: '0.25rem' }}>
           {t.dragDropText}
         </p>
-        <p style={{ fontSize: '0.8rem', color: '#64748b' }}>
+        <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>
           Supports standard 45° fundus images (macula or disc centered)
         </p>
       </div>
 
       {/* Preview Section if uploaded */}
       {currentScan.image && (
-        <div style={{ marginTop: '1.25rem', padding: '1rem', border: '1px solid #e2e8f0', borderRadius: '10px', backgroundColor: '#f8fafc' }}>
+        <div style={{ marginTop: '1.25rem', padding: '1rem', border: '1px solid var(--border-color)', borderRadius: '10px', backgroundColor: 'var(--primary-50)' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
-            <span style={{ fontWeight: 700, fontSize: '0.9rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-              <ImageIcon size={18} color="#0284c7" /> Selected Scan: {currentScan.imageName}
+            <span style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--text-dark)', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <ImageIcon size={18} color="var(--primary-600)" /> Selected Scan: {currentScan.imageName}
             </span>
-            <span style={{ fontSize: '0.75rem', background: '#e0f2fe', color: '#0369a1', padding: '0.2rem 0.6rem', borderRadius: '12px', fontWeight: 700 }}>
+            <span style={{ fontSize: '0.75rem', background: 'var(--primary-100)', color: 'var(--primary-800)', padding: '0.2rem 0.6rem', borderRadius: '12px', fontWeight: 700 }}>
               Preview Ready
             </span>
           </div>
@@ -85,8 +85,8 @@ export default function ImageUpload() {
       )}
 
       {/* Sample Image Presets for Easy Demoing */}
-      <div style={{ marginTop: '1.5rem', borderTop: '1px solid #e2e8f0', paddingTop: '1rem' }}>
-        <p style={{ fontWeight: 700, fontSize: '0.85rem', color: '#334155', marginBottom: '0.5rem' }}>
+      <div style={{ marginTop: '1.5rem', borderTop: '1px solid var(--border-color)', paddingTop: '1rem' }}>
+        <p style={{ fontWeight: 700, fontSize: '0.85rem', color: 'var(--text-dark)', marginBottom: '0.5rem' }}>
           {t.selectSample}
         </p>
         <div className="sample-grid">
@@ -95,8 +95,8 @@ export default function ImageUpload() {
               key={sample.id} 
               className="sample-item"
               style={{
-                borderColor: currentScan.image === sample.url ? '#0284c7' : '#e2e8f0',
-                backgroundColor: currentScan.image === sample.url ? '#f0f9ff' : '#ffffff'
+                borderColor: currentScan.image === sample.url ? 'var(--primary-600)' : 'var(--border-color)',
+                backgroundColor: currentScan.image === sample.url ? 'var(--primary-50)' : 'var(--card-bg)'
               }}
               onClick={() => updateScanImage(sample.url, sample.name)}
             >
