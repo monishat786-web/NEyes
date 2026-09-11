@@ -1,142 +1,376 @@
+
 import React, { createContext, useContext, useState } from 'react';
 import { translations, initialPatientHistory, sampleFundusImages } from '../translations';
 
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
+
   const [language, setLanguage] = useState('en');
   const [isOnline, setIsOnline] = useState(true);
   const [showReminder, setShowReminder] = useState(true);
   const [historyList, setHistoryList] = useState(initialPatientHistory);
 
-  // Current screening session state
+  // ==================================================
+  // CURRENT SCREENING SESSION
+  // ==================================================
+
   const [currentScan, setCurrentScan] = useState({
-    image: sampleFundusImages[1].url, // Default sample (Mild)
+
+    image: sampleFundusImages[1].url,
     imageName: sampleFundusImages[1].name,
+
+    // Actual uploaded file
+    file: null,
+
+    // Quality
     isQualityChecking: false,
-    qualityStatus: 'ok', // 'ok' | 'unclear' | 'checking'
+    qualityStatus: 'ok',
+
+    // AI analysis
     isAnalyzing: false,
     analyzed: true,
-    grade: 'Mild', // 'No DR' | 'Mild' | 'Moderate' | 'Severe' | 'Proliferative' | 'Unclear'
+
+    // AI result
+    grade: 'Mild',
     confidence: 0.941,
+    uncertain: false,
+
+    // Grad-CAM
+    gradcam: null,
+
+    // Doctor review
     doctorReview: {
-      action: 'Confirm', // 'Confirm' | 'Modify'
+      action: 'Confirm',
       modifiedGrade: 'Mild',
       notes: 'Slight microaneurysms near macula area. Advised blood sugar control and 6-month re-check.',
       saved: true
     }
+
   });
+
 
   const t = translations[language] || translations.en;
 
+
+  // ==================================================
+  // ONLINE / OFFLINE TOGGLE
+  // ==================================================
+
   const toggleOnline = () => {
+
     setIsOnline(prev => !prev);
+
   };
 
-  const updateScanImage = (imageUrl, name = 'Uploaded_Fundus.jpg') => {
+
+  // ==================================================
+  // UPDATE SELECTED IMAGE
+  // ==================================================
+
+  const updateScanImage = (
+    imageUrl,
+    name = 'Uploaded_Fundus.jpg',
+    file = null
+  ) => {
+
     setCurrentScan({
+
       image: imageUrl,
+
       imageName: name,
+
+      file: file,
+
       isQualityChecking: true,
+
       qualityStatus: 'checking',
+
       isAnalyzing: false,
+
       analyzed: false,
+
       grade: null,
+
       confidence: null,
+
+      uncertain: false,
+
+      gradcam: null,
+
       doctorReview: {
+
         action: 'Confirm',
+
         modifiedGrade: '',
+
         notes: '',
+
         saved: false
+
       }
+
     });
 
-    // Simulate Quality Check after 1s
+
+    // ----------------------------------------------
+    // Temporary frontend quality check
+    // ----------------------------------------------
+
     setTimeout(() => {
-      // Check if it's a known unclear sample or default to ok
-      const isUnclear = name.toLowerCase().includes('unclear') || name.toLowerCase().includes('blur');
-      const qStatus = isUnclear ? 'unclear' : 'ok';
+
+      const lowerName = name.toLowerCase();
+
+      const isUnclear =
+        lowerName.includes('unclear') ||
+        lowerName.includes('blur');
+
 
       setCurrentScan(prev => ({
+
         ...prev,
+
         isQualityChecking: false,
-        qualityStatus: qStatus
+
+        qualityStatus: isUnclear
+          ? 'unclear'
+          : 'ok'
+
       }));
+
     }, 900);
+
   };
 
-  const runAnalysis = () => {
-    if (currentScan.qualityStatus === 'unclear') return;
 
-    setCurrentScan(prev => ({ ...prev, isAnalyzing: true }));
+  // ==================================================
+  // RUN REAL AI ANALYSIS
+  // ==================================================
 
-    // Simulate ML Analysis delay
-    setTimeout(() => {
-      // Pick severity based on name or random mock
-      let grade = 'Moderate';
-      let conf = 0.912;
-      const lower = (currentScan.imageName || '').toLowerCase();
-      if (lower.includes('normal') || lower.includes('no dr')) {
-        grade = 'No DR';
-        conf = 0.982;
-      } else if (lower.includes('mild')) {
-        grade = 'Mild';
-        conf = 0.941;
-      } else if (lower.includes('severe')) {
-        grade = 'Severe';
-        conf = 0.915;
-      } else if (lower.includes('proliferative')) {
-        grade = 'Proliferative';
-        conf = 0.952;
+  const runAnalysis = async () => {
+
+    // Do not analyze poor-quality image
+    if (
+      currentScan.qualityStatus === 'unclear'
+    ) {
+
+      return;
+
+    }
+
+
+    // No actual file
+    if (!currentScan.file) {
+
+      alert(
+        'Please upload a retinal image first.'
+      );
+
+      return;
+
+    }
+
+
+    setCurrentScan(prev => ({
+
+      ...prev,
+
+      isAnalyzing: true
+
+    }));
+
+
+    try {
+
+      // --------------------------------------------
+      // Create form data
+      // --------------------------------------------
+
+      const formData = new FormData();
+
+      formData.append(
+        'file',
+        currentScan.file
+      );
+
+
+      // --------------------------------------------
+      // Send image to FastAPI
+      // --------------------------------------------
+
+      const response = await fetch(
+        'http://127.0.0.1:8000/predict',
+        {
+          method: 'POST',
+          body: formData
+        }
+      );
+
+
+      // --------------------------------------------
+      // Check API response
+      // --------------------------------------------
+
+      if (!response.ok) {
+
+        throw new Error(
+          `API Error: ${response.status}`
+        );
+
       }
+
+
+      const result = await response.json();
+
+
+      // --------------------------------------------
+      // Convert confidence
+      // --------------------------------------------
+
+      const confidence =
+        result.confidence / 100;
+
+
+      // --------------------------------------------
+      // Update frontend
+      // --------------------------------------------
 
       setCurrentScan(prev => ({
+
         ...prev,
+
         isAnalyzing: false,
+
         analyzed: true,
-        grade: grade,
-        confidence: conf,
+
+        grade: result.prediction,
+
+        confidence: confidence,
+
+        uncertain: result.uncertain,
+
+        gradcam: result.gradcam,
+
         doctorReview: {
+
           action: 'Confirm',
-          modifiedGrade: grade,
+
+          modifiedGrade: result.prediction,
+
           notes: '',
+
           saved: false
+
         }
+
       }));
-    }, 1200);
+
+
+    } catch (error) {
+
+      console.error(
+        'AI analysis failed:',
+        error
+      );
+
+
+      setCurrentScan(prev => ({
+
+        ...prev,
+
+        isAnalyzing: false,
+
+        analyzed: false
+
+      }));
+
+
+      alert(
+        'Unable to connect to the AI server. Make sure FastAPI is running.'
+      );
+
+    }
+
   };
 
-  const saveDoctorReview = (action, modifiedGrade, notes) => {
+
+  // ==================================================
+  // SAVE DOCTOR REVIEW
+  // ==================================================
+
+  const saveDoctorReview = (
+    action,
+    modifiedGrade,
+    notes
+  ) => {
+
     setCurrentScan(prev => ({
+
       ...prev,
+
       doctorReview: {
+
         action,
+
         modifiedGrade,
+
         notes,
+
         saved: true
+
       }
+
     }));
+
   };
+
+
+  // ==================================================
+  // CONTEXT
+  // ==================================================
 
   return (
-    <AppContext.Provider value={{
-      language,
-      setLanguage,
-      t,
-      isOnline,
-      toggleOnline,
-      showReminder,
-      setShowReminder,
-      currentScan,
-      updateScanImage,
-      runAnalysis,
-      saveDoctorReview,
-      historyList,
-      setHistoryList
-    }}>
+
+    <AppContext.Provider
+      value={{
+
+        language,
+
+        setLanguage,
+
+        t,
+
+        isOnline,
+
+        toggleOnline,
+
+        showReminder,
+
+        setShowReminder,
+
+        currentScan,
+
+        updateScanImage,
+
+        runAnalysis,
+
+        saveDoctorReview,
+
+        historyList,
+
+        setHistoryList
+
+      }}
+    >
+
       {children}
+
     </AppContext.Provider>
+
   );
+
 };
 
-export const useApp = () => useContext(AppContext);
+
+export const useApp = () =>
+  useContext(AppContext);

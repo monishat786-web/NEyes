@@ -12,7 +12,7 @@ export default function ImageUpload() {
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        updateScanImage(event.target.result, file.name);
+        updateScanImage(event.target.result, file.name, file);
       };
       reader.readAsDataURL(file);
     }
