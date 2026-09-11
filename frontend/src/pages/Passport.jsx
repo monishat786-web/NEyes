@@ -13,10 +13,10 @@ export default function Passport() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
         <div>
-          <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-dark)', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-            <FileText color="var(--primary-600)" size={28} /> Diabetic Retinopathy Digital Screening Passport
+          <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#FFFFFF', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+            <FileText color="#F5EBDD" size={28} /> Diabetic Retinopathy Digital Screening Passport
           </h2>
-          <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
+          <p style={{ fontSize: '0.9rem', color: '#D8C7AE', marginTop: '0.2rem' }}>
             Portable health credential summarizing retinal screening status, severity grade, doctor signatures, and follow-up schedule.
           </p>
         </div>
@@ -121,7 +121,7 @@ export default function Passport() {
                 style={{ width: '90px', height: '90px', borderRadius: '8px', objectFit: 'cover', border: '1px solid var(--border-color)' }}
               />
               <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>
-                <p style={{ margin: '0 0 0.3rem 0' }}><strong>Quality:</strong> {currentScan.qualityStatus === 'ok' ? 'Passed ✅' : 'Unclear ❌'}</p>
+                <p style={{ margin: '0 0 0.3rem 0' }}><strong>Quality:</strong> {currentScan.qualityStatus === 'ok' ? 'Passed' : 'Unclear'}</p>
                 <p style={{ margin: '0 0 0.3rem 0' }}><strong>AI Confidence:</strong> {currentScan.confidence ? (currentScan.confidence * 100).toFixed(1) + '%' : 'N/A'}</p>
                 <p style={{ margin: 0 }}><strong>Clinician Signoff:</strong> Dr. S. Ramanathan</p>
               </div>

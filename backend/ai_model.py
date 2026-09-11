@@ -1,9 +1,9 @@
-
 import os
 import cv2
 import torch
 import torch.nn as nn
 import timm
+import numpy as np
 
 from albumentations import Compose, Normalize, Resize
 from albumentations.pytorch import ToTensorV2
@@ -74,6 +74,7 @@ MODEL_PATH = os.path.join(
     "best_model_fold_3.pth"
 )
 
+
 if not os.path.exists(MODEL_PATH):
 
     raise FileNotFoundError(
@@ -90,6 +91,7 @@ state_dict = torch.load(
     MODEL_PATH,
     map_location=device
 )
+
 
 model.load_state_dict(state_dict)
 
@@ -114,6 +116,7 @@ transform = Compose([
     ),
 
     ToTensorV2()
+
 ])
 
 
@@ -128,6 +131,7 @@ def predict_dr(image_path):
     # ----------------------------------------------
 
     img = cv2.imread(image_path)
+
 
     if img is None:
 
@@ -154,6 +158,7 @@ def predict_dr(image_path):
         image=img
     )
 
+
     image_tensor = processed[
         "image"
     ].unsqueeze(0).to(device)
@@ -168,6 +173,7 @@ def predict_dr(image_path):
         outputs = model(
             image_tensor
         )
+
 
         probabilities = torch.softmax(
             outputs,
@@ -210,9 +216,12 @@ def predict_dr(image_path):
     ]
 
 
+    # Use the final spatial feature block
+    # of EfficientNet-B0
+
     target_layers = [
 
-        model.model.conv_head
+        model.model.blocks[-1]
 
     ]
 
@@ -236,7 +245,39 @@ def predict_dr(image_path):
 
 
     # ----------------------------------------------
-    # 7. PREPARE ORIGINAL IMAGE
+    # 7. NORMALIZE HEATMAP
+    # ----------------------------------------------
+
+    grayscale_cam = cv2.normalize(
+
+        grayscale_cam,
+
+        None,
+
+        0,
+
+        1,
+
+        cv2.NORM_MINMAX
+
+    )
+
+
+    # ----------------------------------------------
+    # 8. ENHANCE HEATMAP
+    # ----------------------------------------------
+
+    grayscale_cam = np.power(
+
+        grayscale_cam,
+
+        0.7
+
+    )
+
+
+    # ----------------------------------------------
+    # 9. PREPARE ORIGINAL IMAGE
     # ----------------------------------------------
 
     original = cv2.resize(
@@ -249,13 +290,16 @@ def predict_dr(image_path):
 
 
     original = (
+
         original.astype("float32")
+
         / 255.0
+
     )
 
 
     # ----------------------------------------------
-    # 8. CREATE GRAD-CAM OVERLAY
+    # 10. CREATE GRAD-CAM OVERLAY
     # ----------------------------------------------
 
     visualization = show_cam_on_image(
@@ -270,7 +314,7 @@ def predict_dr(image_path):
 
 
     # ----------------------------------------------
-    # 9. CREATE RESULTS FOLDER
+    # 11. CREATE RESULTS FOLDER
     # ----------------------------------------------
 
     results_dir = os.path.join(
@@ -292,11 +336,13 @@ def predict_dr(image_path):
 
 
     # ----------------------------------------------
-    # 10. SAVE GRAD-CAM IMAGE
+    # 12. SAVE GRAD-CAM IMAGE
     # ----------------------------------------------
 
     gradcam_filename = (
+
         "gradcam_result.jpg"
+
     )
 
 
@@ -325,7 +371,14 @@ def predict_dr(image_path):
 
 
     # ----------------------------------------------
-    # 11. RETURN RESULT
+    # 13. CLOSE GRAD-CAM
+    # ----------------------------------------------
+
+    cam.activations_and_grads.release()
+
+
+    # ----------------------------------------------
+    # 14. RETURN RESULT
     # ----------------------------------------------
 
     result = {
@@ -333,8 +386,11 @@ def predict_dr(image_path):
         "prediction": prediction,
 
         "confidence": round(
+
             confidence * 100,
+
             2
+
         ),
 
         "uncertain": uncertain,
@@ -347,4 +403,60 @@ def predict_dr(image_path):
 
 
     return result
- 
+def check_image_quality(image_path):
+
+    img = cv2.imread(image_path)
+
+    if img is None:
+        raise ValueError("Image could not be loaded")
+
+    gray = cv2.cvtColor(
+        img,
+        cv2.COLOR_BGR2GRAY
+    )
+
+    # Blur detection
+    blur_score = cv2.Laplacian(
+        gray,
+        cv2.CV_64F
+    ).var()
+
+    # Brightness
+    brightness = gray.mean()
+
+    # Contrast
+    contrast = gray.std()
+
+    # Prototype thresholds
+    blur_ok = blur_score >= 50
+    brightness_ok = 30 <= brightness <= 220
+    contrast_ok = contrast >= 25
+
+    quality_ok = (
+        blur_ok
+        and brightness_ok
+        and contrast_ok
+    )
+
+    if not blur_ok:
+        message = "Image is blurry. Please retake the photo."
+
+    elif brightness < 30:
+        message = "Image is too dark. Please retake the photo."
+
+    elif brightness > 220:
+        message = "Image is too bright. Please retake the photo."
+
+    elif contrast < 25:
+        message = "Image has low contrast. Please retake the photo."
+
+    else:
+        message = "Image quality is good and suitable for screening."
+
+    return {
+        "quality_ok": quality_ok,
+        "blur_score": round(float(blur_score), 2),
+        "brightness": round(float(brightness), 2),
+        "contrast": round(float(contrast), 2),
+        "quality_message": message
+    }

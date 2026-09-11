@@ -31,10 +31,10 @@ export default function History() {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       <div>
-        <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-dark)', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-          <HistoryIcon color="var(--primary-600)" size={28} /> Patient Screening History Log
+        <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#FFFFFF', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+          <HistoryIcon color="#F5EBDD" size={28} /> Patient Screening History Log
         </h2>
-        <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
+        <p style={{ fontSize: '0.9rem', color: '#D8C7AE', marginTop: '0.2rem' }}>
           Comprehensive record of past retina screenings, longitudinal progression trends, and physician validations.
         </p>
       </div>

@@ -58,7 +58,7 @@ export default function ImageUpload() {
           accept="image/*" 
           onChange={handleFileChange} 
         />
-        <div className="dropzone-icon">📷</div>
+        <div className="dropzone-text-badge">Fundus Scan Input</div>
         <p style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--primary-700)', marginBottom: '0.25rem' }}>
           {t.dragDropText}
         </p>

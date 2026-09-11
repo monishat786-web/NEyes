@@ -14,10 +14,10 @@ export default function Screening() {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div>
-          <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-dark)', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-            <Activity color="var(--primary-600)" size={28} /> Diabetic Retinopathy Screening Workflow
+          <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#FFFFFF', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+            <Activity color="#F5EBDD" size={28} /> Diabetic Retinopathy Screening Workflow
           </h2>
-          <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
+          <p style={{ fontSize: '0.9rem', color: '#D8C7AE', marginTop: '0.2rem' }}>
             Step-by-step image upload, quality verification, AI severity prediction, Grad-CAM heatmap, and doctor validation.
           </p>
         </div>

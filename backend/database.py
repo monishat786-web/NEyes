@@ -1,19 +1,18 @@
 import sqlite3
+import os
 
-DB_NAME = "database/screening.db"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DB_PATH = os.path.join(BASE_DIR, "database", "screening.db")
 
 
 def get_connection():
-    conn = sqlite3.connect(DB_NAME)
-    conn.row_factory = sqlite3.Row
-    return conn
+    return sqlite3.connect(DB_PATH)
 
 
 def create_tables():
     conn = get_connection()
     cursor = conn.cursor()
 
-    # Patient details
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS patients (
             patient_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -26,17 +25,16 @@ def create_tables():
         )
     """)
 
-    # Screening details and AI result
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS screenings (
             screening_id INTEGER PRIMARY KEY AUTOINCREMENT,
             patient_id INTEGER NOT NULL,
             image_path TEXT,
+            image_quality TEXT,
             blur_score REAL,
             brightness_score REAL,
             contrast_score REAL,
             retinal_visibility TEXT,
-            image_quality TEXT,
             dr_result TEXT,
             confidence REAL,
             ai_not_sure INTEGER DEFAULT 0,
@@ -47,7 +45,6 @@ def create_tables():
         )
     """)
 
-    # Screening reminders
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS reminders (
             reminder_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -59,7 +56,6 @@ def create_tables():
         )
     """)
 
-    # Offline screening / synchronization
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS offline_sync (
             sync_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -79,4 +75,7 @@ def create_tables():
 
 if __name__ == "__main__":
     create_tables()
-    print("SQLite database and tables created successfully!")
+    print("Database created successfully!")
+if __name__ == "__main__":
+    create_tables()
+    print("Database created successfully!")

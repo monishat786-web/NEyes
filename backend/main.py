@@ -7,6 +7,7 @@ import shutil
 from ai_model import predict_dr
 
 
+
 # ==================================================
 # FASTAPI APP
 # ==================================================
@@ -119,3 +120,17 @@ async def predict(
         "gradcam": f"/results/{gradcam_filename}"
 
     }
+@app.post("/quality-check")
+async def quality_check(file: UploadFile = File(...)):
+
+    image_path = os.path.join(
+        "temp",
+        file.filename
+    )
+
+    with open(image_path, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+
+    result = check_image_quality(image_path)
+
+    return result

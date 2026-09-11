@@ -96,7 +96,7 @@ export default function DoctorReview() {
           </button>
           {justSaved && (
             <span style={{ color: '#059669', fontWeight: 700, fontSize: '0.9rem' }}>
-              ✅ {t.savedSuccess}
+              {t.savedSuccess}
             </span>
           )}
         </div>
