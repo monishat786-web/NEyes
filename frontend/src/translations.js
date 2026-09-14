@@ -196,7 +196,6 @@ export const translations = {
     gradcamDesc: "రెటినాలో మార్పులు గుర్తించబడిన ప్రాంతాల దృశ్య సమాచారం.",
   }
 };
-
 export const sampleFundusImages = [
   {
     id: 'normal',
@@ -204,7 +203,7 @@ export const sampleFundusImages = [
     grade: 'No DR',
     confidence: 0.982,
     quality: 'ok',
-    url: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80',
+    url: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Fundus_photograph-normal_retina_EDA06.JPG',
     description: 'Clear fundus scan with healthy optic disc and clean blood vessels.'
   },
   {
@@ -213,7 +212,7 @@ export const sampleFundusImages = [
     grade: 'Mild',
     confidence: 0.941,
     quality: 'ok',
-    url: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=600&q=80',
+    url: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Fundus_retinopathy_EDA03.JPG',
     description: 'Isolated microaneurysms detected in superior quadrant.'
   },
   {
@@ -222,7 +221,7 @@ export const sampleFundusImages = [
     grade: 'Moderate',
     confidence: 0.887,
     quality: 'ok',
-    url: 'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=600&q=80',
+    url: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Fundus_-_diabetic_retinopathy.png',
     description: 'Multiple microaneurysms, hard exudates, and intraretinal hemorrhages.'
   },
   {
@@ -231,8 +230,8 @@ export const sampleFundusImages = [
     grade: 'Severe',
     confidence: 0.915,
     quality: 'ok',
-    url: 'https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=600&q=80',
-    description: 'Widespread hemorrhages (>20 per quadrant), venous beading in 2+ quadrants.'
+    url: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Fundus_photo_showing_scatter_laser_surgery_for_diabetic_retinopathy_EDA09.JPG',
+    description: 'Widespread diabetic retinopathy changes in the fundus.'
   },
   {
     id: 'unclear',
@@ -240,10 +239,10 @@ export const sampleFundusImages = [
     grade: 'Unclear',
     confidence: 0.520,
     quality: 'unclear',
-    url: 'https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&w=600&q=80',
-    description: 'Poor illumination and media opacity blurring macular details.'
+    url: 'https://commons.wikimedia.org/wiki/Special:Redirect/file/Fundus_Proliferative_retinopathy_EDA01.JPG',
+    description: 'Fundus image showing advanced proliferative retinopathy.'
   }
-];
+]
 
 export const initialPatientHistory = [
   {

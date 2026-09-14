@@ -4,7 +4,7 @@ from fastapi.staticfiles import StaticFiles
 import os
 import shutil
 
-from ai_model import predict_dr
+from ai_model import predict_dr,check_image_quality
 
 
 

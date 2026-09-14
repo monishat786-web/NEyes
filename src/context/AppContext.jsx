@@ -113,32 +113,69 @@ export const AppProvider = ({ children }) => {
     });
 
 
-    // ----------------------------------------------
-    // Temporary frontend quality check
-    // ----------------------------------------------
+   if (!file) {
+  return;
+}
 
-    setTimeout(() => {
+const formData = new FormData();
 
-      const lowerName = name.toLowerCase();
+formData.append('file', file);
 
-      const isUnclear =
-        lowerName.includes('unclear') ||
-        lowerName.includes('blur');
+fetch('http://127.0.0.1:8000/quality-check', {
+  method: 'POST',
+  body: formData
+})
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Quality check failed');
+    }
 
+    return response.json();
+  })
+  .then(result => {
 
-      setCurrentScan(prev => ({
+  console.log('QUALITY RESULT:', result);
 
-        ...prev,
+  setCurrentScan(prev => ({
 
-        isQualityChecking: false,
+      ...prev,
 
-        qualityStatus: isUnclear
-          ? 'unclear'
-          : 'ok'
+      isQualityChecking: false,
 
-      }));
+      qualityStatus: result.quality_ok
+        ? 'ok'
+        : 'unclear',
 
-    }, 900);
+      qualityMessage: result.quality_message,
+
+      qualityScore: result.quality_ok
+        ? 100
+        : 0
+
+    }));
+
+  })
+  .catch(error => {
+
+    console.error(
+      'Quality check failed:',
+      error
+    );
+
+    setCurrentScan(prev => ({
+
+      ...prev,
+
+      isQualityChecking: false,
+
+      qualityStatus: 'unclear',
+
+      qualityMessage:
+        'Unable to verify image quality.'
+
+    }));
+
+  });
 
   };
 

@@ -420,6 +420,7 @@ def check_image_quality(image_path):
         gray,
         cv2.CV_64F
     ).var()
+    print("Blur score:", blur_score)
 
     # Brightness
     brightness = gray.mean()

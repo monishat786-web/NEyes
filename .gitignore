@@ -30,3 +30,20 @@ Thumbs.db
 
 # Jupyter
 .ipynb_checkpoints/
+# Database
+backend/database/*.db
+
+# Temporary files
+backend/temp/
+
+# Python
+__pycache__/
+*.pyc
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+
+# Environment variables
+.env
+*.env
